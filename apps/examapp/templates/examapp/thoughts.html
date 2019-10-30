@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+        <a href='/logout'>Log out</a>
+        <a href="/thoughts">Dashboard</a>
+    <h2>{{current_thought.uploaded_by.first_name}} says</h2>
+    <p>{{current_thought.desc}}</p>
+    {%if current_user in liked_by%}
+    <p><a href="/unlike/{{current_thought.id}}">Unlike</a></p>
+    {%endif%}
+    {%if current_user not in liked_by%}
+    <p><a href="/like/{{current_thought.id}}">Like</a></p>
+    {%endif%}
+
+    <h5>People who liked this thought:</h5>
+    <table>
+
+        <thead><tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+        </tr></thead>
+        <tbody>
+        {%for user in liked_by %}
+        {%if current_thought.uploaded_by.id != user.id%}
+        <tr>
+        <td>{{user.first_name}}</td>
+        <td>{{user.last_name}}</td>
+        </tr>
+        {%endif%}
+
+        {%endfor%}
+        {%for user in liked_by%}
+        {%if current_thought.uploaded_by.id == user.id%}
+        <tr>
+        <td>{{user.first_name}}</td>
+        <td>{{user.last_name}}</td>
+        </tr>
+        {%endif%}
+
+        {%endfor%}
+
+
+        </tbody>
+        </table>
+</body>
+</html>

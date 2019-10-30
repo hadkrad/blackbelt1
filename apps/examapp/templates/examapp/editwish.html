@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+        {% if messages %}
+        <ul class="messages">    
+            {% for message in messages %}    
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+            {% endfor %}
+        </ul>
+        {% endif %}
+    <h1>Hello {{current_user.first_name}}! Let's edit your wish!</h1>
+    <a href="/logout">Logout</a>
+
+    <form action="/completeedit" method='POST'>
+    {% csrf_token %}
+    
+    I wish for: <input type="text" name='item' value='{{current_wish.item}}'>
+    Description: <input type="textarea" name='desc' value="{{current_wish.desc}}">
+    <input type="hidden" name = 'wishid' value='{{current_wish.id}}'>
+    
+    <button type='submit'>Submit</button>
+    <a href="/dashboard">Cancel</a>
+    
+    </form>
+
+
+</body>
+</html>

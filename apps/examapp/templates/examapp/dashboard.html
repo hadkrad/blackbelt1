@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+        {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+    <h1>Hi {{ current_user.first_name }} {{ current_user.last_name }}!</h1>
+    <a href='/logout'>Log out</a>
+    <!-- <a href="/wishes/stats">View </a>
+    <a href="/wishes/new">New Job</a> -->
+    <form action="/newthought" method="POST">
+        {%csrf_token%}
+        <input type="text" placeholder="Post a Great Thought Here!" name='desc'>
+        <button type='submit'>Add Thought!</button>
+
+
+
+    </form>
+
+
+            {%for thought in all_thoughts%}
+           
+        <h3>{{thought.uploaded_by.first_name}} says</h3>
+        <p>{{thought.desc}}</p>
+        <h4><a href="/thoughts/{{thought.id}}">Details</a>              {{thought.users_who_like.count}} people like this
+        
+            {%if thought.uploaded_by.id == current_user.id%}
+            <a href="/delete/{{thought.id}}">Delete</a>
+            {%endif%}
+        
+        </h4>
+        
+
+        
+        
+        {% endfor %}
+
+
+
+        </tbody>
+    </table>
+
+
+
+
+</body>
+</html>
